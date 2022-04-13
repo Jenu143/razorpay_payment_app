@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:payment_razorpay/payment_gateway.dart';
 import 'dart:convert';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -45,82 +45,64 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: GestureDetector(
         onTap: () => textFocusController.unfocus(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text("Razor Pay"),
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                    focusNode: textFocusController,
-                    cursorRadius: Radius.zero,
-                    textAlign: TextAlign.center,
-                    controller: textEditingController,
-                    decoration: const InputDecoration(
-                      hintText: "Amount",
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                "Razor Pay",
+                style: TextStyle(fontSize: 18),
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.black,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      focusNode: textFocusController,
+                      cursorRadius: Radius.zero,
+                      cursorColor: Colors.red,
+                      textAlign: TextAlign.center,
+                      controller: textEditingController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter Your Amount",
+                        focusedBorder: OutlineInputBorder(),
+                      ),
+                      style: const TextStyle(fontSize: 20.0),
                     ),
-                    style: const TextStyle(fontSize: 35.0),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 50,
-                  child: RaisedButton(
-                    color: Colors.deepPurple,
-                    child: const Text(
-                      "Pay",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: 200,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.black,
+                        ),
+                      ),
+                      child: const Text(
+                        "Pay",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      ),
+                      onPressed: () {
+                        openCheckout();
+                      },
                     ),
-                    onPressed: () {
-                      openCheckout();
-                    },
                   ),
-                ),
-                // SizedBox(
-                //   height: 40,
-                //   child: GetBuilder<PaymentGetway>(
-                //     init: PaymentGetway(),
-                //     builder: (v) {
-                //       return GestureDetector(
-                //         onTap: () {
-                //           v.paymentOptions(
-                //             10,
-                //             "Jenis",
-                //             9574028300,
-                //             "radadiyajenis2001@gmail.com",
-                //             "GooglePay",
-                //           );
-                //         },
-                //         child: Container(
-                //           decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(10),
-                //             color: Colors.red,
-                //           ),
-                //           width: 130,
-                //           child: const Center(
-                //             child: Text(
-                //               "Payment Now",
-                //               style: TextStyle(
-                //                 color: Colors.white,
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 16,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // )
-              ],
+                ],
+              ),
             ),
           ),
         ),
